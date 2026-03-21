@@ -1,0 +1,43 @@
+UPDATE users1
+SET name = 'NISHANT',email = 'nishant@gmail.com'
+WHERE ID =50;
+SELECT * FROM users;
+DELETE FROM users 
+WHERE id  = 50;
+SELECT * FROM users;
+-- Parent Table
+CREATE TABLE Student (
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(100) NOT NULL,
+    age INT,
+    email VARCHAR(50) UNIQUE
+);
+SELECT* FROM Student;
+-- Child Table
+CREATE TABLE Course (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(100) NOT NULL,
+    student_id INT, 
+    FOREIGN KEY (student_id) REFERENCES Student(student_id)
+);SELECT* FROM Course;
+INSERT INTO Student (student_id, student_name, age, email)
+VALUES 
+(10, 'Aman Thappa', 20, 'Aman@example.com'),
+(20, 'Abhay', 19, 'abhay@example.com'),
+(30, 'vivek', 21, 'vivek@example.com');
+SELECT * FROM Student;
+INSERT INTO Course (course_id, course_name, student_id)
+VALUES 
+(101, 'Data Structures', 1),
+(102, 'DBMS', 1),
+(103, 'Operating Systems', 2),
+(104, 'Computer Networks', 3);
+SELECT * FROM Course;
+UPDATE Student SET student_id = 500 WHERE student_id = 10;
+SELECT * FROM Course;
+DELETE FROM Student WHERE student_id = 20;
+SELECT * FROM Course;
+SELECT Student.student_name, Course.course_name
+FROM Student
+INNER JOIN Course ON Student.student_id = Course.student_id;
+SELECT * FROM Student;
