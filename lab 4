@@ -1,0 +1,49 @@
+ USE SQL_lab;
+ CREATE TABLE student5(
+     st_id INT PRIMARY KEY,
+     name VARCHAR(20),
+     Phone VARCHAR(15)
+);
+
+ CREATE TABLE Course5(
+     course_id VARCHAR(20) PRIMARY KEY,
+    name VARCHAR(20),
+    Phone VARCHAR(15)
+);
+
+ CREATE TABLE employee5(
+    st_id INT,
+   course_id VARCHAR(20),
+   marks INT,
+   payment INT,
+    FOREIGN KEY (st_id) REFERENCES student5(st_id),
+    FOREIGN KEY (course_id) REFERENCES Course5(course_id)
+ );
+ INSERT INTO student5 VALUES
+(1,'AMAN',456738),
+ (2,'ABHAY',53435),
+ (3,'PANKAJ',87653);
+ INSERT INTO Course5 VALUES
+('ABC23','AMAN',2345678),
+('SDE45','ABHAY',345676),
+ ('SE34','PANKAJ',67890);
+ INSERT INTO employee5 VALUES
+ (1,'ABC23',345,708),
+ (2,'SDE45',385,768),
+(3,'SE34',315,168);
+SELECT*FROM student5;
+SELECT*FROM Course5;
+ SELECT*FROM employee5;
+ ALTER TABLE Course5 rename Column course_id TO cid;
+ UPDATE student5 SET Phone=6006754 WHERE st_id=1;
+ DELETE FROM employee5 WHERE course_id='SE34';
+ SELECT *from STUDENT5 WHERE st_id>1;
+ SELECT 
+ S.st_id AS "Id",
+ S.name AS "Student name",
+ C.name AS "Course",
+ E.marks AS "MARKS",
+ E.payment AS "Payment"
+ FROM employee5 E
+ JOIN student5 S ON E.st_id=S.st_id
+ JOIN Course5 C ON E.course_id = C.course_id;
