@@ -1,0 +1,123 @@
+CREATE TABLE Departments(
+Dept_id INT PRIMARY KEY,
+Dept_name VARCHAR(100),
+Building VARCHAR(100),
+HOD VARCHAR(100),
+BUDGET INT ,
+CAPACITY INT );
+
+CREATE TABLE Employees1(
+Emp_id INT PRIMARY KEY,
+First_name VARCHAR(100),
+Last_name VARCHAR(100),
+JobTitle VARCHAR(100),
+Salary INT ,
+Dept_id  INT,
+FOREIGN KEY(Dept_id ) REFERENCES Departments(Dept_id ) ON DELETE CASCADE
+ ON UPDATE CASCADE);
+
+CREATE TABLE Students(
+Student_id INT PRIMARY KEY,
+Name VARCHAR(100),
+Age INT,
+Email VARCHAR(100),
+City VARCHAR(100),
+DeptID INT);
+
+CREATE TABLE Courses(
+Course_id INT PRIMARY KEY,
+Title VARCHAR(100),
+Credits INT,
+Professor VARCHAR(100),
+RoomNo INT ,
+Semester INT );
+
+CREATE TABLE Enrollments(
+Enroll_id INT PRIMARY KEY,
+Student_id INT,
+Course_id INT,
+Grade INT,
+Attendance INT,
+FOREIGN KEY (Student_id) REFERENCES Students(Student_id)
+ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (Course_id) REFERENCES Courses(Course_id)
+ON DELETE CASCADE 
+ON UPDATE CASCADE) ;
+
+CREATE TABLE Medical_Reports(
+RecordID INT PRIMARY KEY,
+Student_id INT UNIQUE ,
+FOREIGN KEY (Student_id) REFERENCES Student(Student_id),
+BloodGroup VARCHAR(100),
+Allergy VARCHAR(100),
+LastCheckup DATE);
+
+INSERT INTO Departments VALUES 
+(10, 'Computer Science', 'CSE block', 'Dr. Sharma', 500000, 200),
+(20, 'Electronics', 'ECE Block', 'Dr. Khan', 450000, 150),
+(30, 'Mechanical', 'North Wing', 'Prof. Kumar', 400000, 180),
+(40, 'Information Tech', 'IT Block', 'Dr. Verma', 550000, 120),
+(50, 'Civil Eng', 'South Wing', 'Prof. Tiwari', 350000, 250);
+
+INSERT INTO Employees1 VALUES 
+(101, 'Abhay', 'Verma', 'Assistant Prof', 75000, 10),
+(102, 'Suresh', 'raina', 'Lab Tech', 35000, 10),
+(103, 'Rohan', 'gupta', 'Analyst', 60000, 40),
+(104, 'vivek', 'Sharma', 'HOD Assistant', 45000, 20),
+(105, 'Aman', 'Thappa', 'Professor', 95000, 30);
+
+INSERT INTO Students VALUES 
+(1, 'Aman', 19, 'aman@email.com', 'jammu', 10),
+(2, 'Mandeep singh', 19, 'mandeep@email.com', 'Jammu', 40),
+(3, 'Rahul Dev', 19, 'rahul@email.com', 'Delhi', 10),
+(4, 'Pankaj', 22, 'pankaj@email.com', 'Srinagar', 20),
+(5, 'abhishek', 20, 'abhishek@email.com', 'punjab', 30);
+
+INSERT INTO Courses VALUES 
+(301, 'DBMS', 4, 'Prof. Ray', 102, 4),
+(302, 'Data Structures', 4, 'Dr. Bhat', 105, 3),
+(303, 'Digital Elec', 3, 'Prof. Mir', 201, 4),
+(304, 'OS', 4, 'Dr. Lone', 102, 4),
+(305, 'Python Prog', 2, 'Prof. Verma', 305, 2);
+
+INSERT INTO Enrollments VALUES 
+(5001, 1, 301, 85, 92),
+(5002, 1, 304, 78, 88),
+(5003, 2, 301, 92, 95),
+(5004, 3, 302, 88, 80),
+(5005, 4, 303, 75, 70);
+
+INSERT INTO Medical_Reports VALUES 
+(1, 1, 'B+', 'None', '2026-01-15'),
+(2, 2, 'A-', 'Dust', '2026-02-10'),
+(3, 3, 'O+', 'Peanuts', '2025-12-20'),
+(4, 4, 'AB+', 'None', '2026-03-01'),
+(5, 5, 'B-', 'Penicillin', '2026-01-05');
+
+UPDATE Departments SET BUDGET = 650000 WHERE Dept_id = 10;
+DELETE FROM Departments WHERE Dept_id = 50;
+
+UPDATE Employees1 SET Salary = 80000 WHERE Emp_id = 101;
+DELETE FROM Employees1 WHERE Emp_id = 105;
+
+UPDATE Students SET City = 'Pahalgam' WHERE Student_id = 1;
+DELETE FROM Students WHERE Student_id = 5;
+
+UPDATE Courses SET Credits = 5 WHERE Course_id = 301;
+DELETE FROM Courses WHERE Course_id = 305;
+
+UPDATE Enrollments SET Grade = 95 WHERE Enroll_id = 5001;
+DELETE FROM Enrollments WHERE Enroll_id = 5005;
+
+UPDATE Medical_Reports SET Allergy = 'Pollens' WHERE Student_id = 2;
+DELETE FROM Medical_Reports WHERE RecordID = 4; 
+
+SELECT DISTINCT City, Student_id, Name
+FROM Students;
+
+SELECT * FROM Departments;
+SELECT * FROM Employees1;
+SELECT * FROM Students;
+SELECT * FROM Courses;
+SELECT * FROM Enrollments;
+SELECT * FROM Departments;
