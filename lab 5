@@ -1,0 +1,17 @@
+ date-24-03-2026
+ 5th lab
+USE SQL_lab;
+show tables;
+SELECT*FROM Students;
+SELECT*FROM Courses;
+SELECT*FROM Enrollments;
+DELETE FROM Enrollments WHERE Course_id=301;
+DELETE FROM Courses WHERE Course_id=301;
+ALTER TABLE Enrollments
+DROP FOREIGN KEY fk_course;
+ALTER TABLE Enrollments
+MODIFY Course_id INT NULL;
+ALTER TABLE Enrollments
+ADD CONSTRAINT fk_course
+FOREIGN KEY (Course_id) REFERENCES Courses(Course_id)
+ON DELETE SET NULL;
