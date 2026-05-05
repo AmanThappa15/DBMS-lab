@@ -1,0 +1,73 @@
+-- Date :5-05-2026
+INSERT INTO Supplier VALUES
+ ("S1","Ravi"),
+ ("S2","Gopal"),
+ ("S3","Rohit"),
+ ("S4","Ramdass");
+  INSERT INTO part VALUES
+ ("P1","Motor","Red"),
+ ("P2","Tyre","Blue"),
+ ("P3","Handle","Red"),
+ ("P4","Rim","Black");
+  INSERT INTO Catalog VALUES
+ ("S1","P1"),
+ ("S2","P2"),
+ ("S3","P3");
+ SELECT S_id
+ From Catalog C 
+ WHERE EXISTS (SELECT *
+				FROM part P
+                WHERE p.P_id=C.P_id
+                AND color="RED");
+SELECT P_id,  Pname
+FROM part p
+WHERE NOT EXISTS(SELECT*
+				FROM Catalog C
+                WHERE p.P_id=C.P_id
+					);
+SELECT C.S_id -- Nested Not EXIST
+FROM Catalog C
+WHERE NOT EXISTS(SELECT P.P_id
+				FROM part P 
+                WHERE NOT EXISTS(SELECT P.P_id
+                FROM Catalog C1
+                WHERE C1.S_id=C.S_id
+                AND C1.P_id=C.P_id)
+                );
+	SELECT C.S_id
+    FROM Catalog C 
+    WHERE NOT EXISTS(SELECT P_id
+					FROM part 
+                    EXCEPT
+                    SELECT P_id
+                    FROM Catalog C1
+                    WHERE C1.S_id=C.S_id
+					);
+	
+	
+ALTER TABLE Supplier
+ADD rating INT;
+UPDATE Supplier
+SET rating=11
+WHERE S_id="S2";
+UPDATE Supplier
+SET rating=14
+WHERE S_id="S3";
+UPDATE Supplier
+SET rating=9
+WHERE S_id="S4";
+SELECT S_id
+FROM Supplier S
+WHERE rating>10;
+EXCEPT
+SELECT S_id
+FROM Supplier
+WHERE rating>10
+AND EXISTS(
+			SELECT P_id
+            FROM part P
+            WHERE P.color="Red")
+            EXCEPT
+            (SELECT P_id
+            FROM Catalog C
+            WHERE C.S_id=S.S_id)
